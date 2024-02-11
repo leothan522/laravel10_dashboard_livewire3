@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard;
+namespace App\Livewire\Dashboard;
 
 use App\Models\Parametro;
 use App\Models\User;
@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,9 +17,9 @@ class UsuariosComponent extends Component
     use LivewireAlert;
     use WithPagination;
 
-    protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['buscar', 'confirmedUser', 'verPermisos',
-        'saveRol', 'addRolList', 'setRolList', 'confirmedRol', 'removeRolList'];
+    //protected $paginationTheme = 'bootstrap';
+   /* protected $listeners = ['buscar', 'confirmedUser', 'verPermisos',
+        'saveRol', 'addRolList', 'setRolList', 'confirmedRol', 'removeRolList'];*/
 
     public $view = "create", $keyword;
     public $name, $email, $password, $role, $usuario_id;
@@ -200,6 +201,7 @@ class UsuariosComponent extends Component
         ]);
     }
 
+    #[On('confirmedUser')]
     public function confirmedUser()
     {
         $usuario = User::find($this->usuario_id);
@@ -228,11 +230,13 @@ class UsuariosComponent extends Component
 
     }
 
+    #[On('buscar')]
     public function buscar($keyword)
     {
         $this->keyword = $keyword;
     }
 
+    #[On('verPermisos')]
     public function verPermisos($tabla, $id)
     {
         $this->tabla = $tabla;
@@ -252,6 +256,7 @@ class UsuariosComponent extends Component
 
     }
 
+    #[On('saveRol')]
     public function saveRol($nombre)
     {
         $type = "success";
@@ -273,7 +278,7 @@ class UsuariosComponent extends Component
                 $parametro->nombre = $nombre;
                 $parametro->tabla_id = -1;
                 $parametro->save();
-                $this->emit('addRolList', $parametro->id, ucwords($parametro->nombre));
+                $this->dispatch('addRolList', id: $parametro->id, nombre: $parametro->nombre);
             }
 
         }
@@ -304,7 +309,7 @@ class UsuariosComponent extends Component
                 $parametro = Parametro::find($this->tabla_id);
                 $parametro->nombre = $this->tabla_nombre;
                 $parametro->update();
-                $this->emit('setRolList', $parametro->id, ucwords($parametro->nombre));
+                $this->dispatch('setRolList', id: $parametro->id, nombre: ucwords($parametro->nombre));
             }
 
             $this->alert(
@@ -328,6 +333,7 @@ class UsuariosComponent extends Component
         ]);
     }
 
+    #[On('confirmedRol')]
     public function confirmedRol()
     {
         // Example code inside confirmed callback
@@ -349,7 +355,7 @@ class UsuariosComponent extends Component
             $parametro = Parametro::find($this->tabla_id);
             $id = $parametro->id;
             $parametro->delete();
-            $this->emit('removeRolList', $id);
+            $this->dispatch('removeRolList', id: $id);
 
             $this->alert(
                 'success',
@@ -416,17 +422,20 @@ class UsuariosComponent extends Component
         );
     }
 
-    public function addRolList()
+    #[On('addRolList')]
+    public function addRolList($id, $nombre)
     {
         //agrego rol nuevo al right-sidebar
     }
 
-    public function setRolList()
+    #[On('setRolList')]
+    public function setRolList($id, $nombre)
     {
         //edito nombre a un rol rol nuevo en el right-sidebar
     }
 
-    public function removeRolList()
+    #[On('removeRolList')]
+    public function removeRolList($id)
     {
         //elimino a un rol del right-sidebar
     }

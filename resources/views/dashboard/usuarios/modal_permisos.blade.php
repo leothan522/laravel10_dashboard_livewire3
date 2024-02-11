@@ -23,9 +23,9 @@
             <div class="modal-footer justify-content-end">
                 @if($tabla == "parametros")
                     <button type="button" class="btn btn-danger btn-sm" wire:click="destroyRol({{ $tabla_id }})"><i class="fas fa-trash-alt"></i></button>
-                    <form wire:submit.prevent="updateRol()">
+                    <form wire:submit="updateRol()">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="nombre" wire:model.defer="tabla_nombre">
+                            <input type="text" class="form-control" placeholder="nombre" wire:model="tabla_nombre">
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-success btn-flat">
                                     <i class="fas fa-save"></i>

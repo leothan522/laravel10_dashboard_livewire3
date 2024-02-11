@@ -41,10 +41,10 @@
         $("#from_rol").submit(function(e) {
             e.preventDefault();
             let nombre = document.getElementById("nuevo_rol");
-            Livewire.emit('saveRol', nombre.value);
+            Livewire.dispatch('saveRol', { nombre: nombre.value });
         });
 
-        Livewire.on('addRolList', (idRol, nombreRol) => {
+        Livewire.on('addRolList', ({ id, nombre }) => {
             let input = document.getElementById("nuevo_rol");
             input.value = null;
             input.blur();
@@ -52,24 +52,35 @@
                 'class="btn btn-primary btn-sm btn-block m-1" ' +
                 'data-toggle="modal" data-target="#modal-user-permisos" ' +
                 'class="btn btn-info btn-sm" ' +
-                'onclick="verRoles(' +  idRol + ')" id="set_rol_id_' + idRol + '">' +  nombreRol + ' </button>';
+                'onclick="verRoles(' +  id + ')" id="set_rol_id_' + id + '">' +  nombre + ' </button>';
             $('#listar_roles').append(boton);
         });
 
-        Livewire.on('setRolList', (idRol, nombreRol) => {
-            let boton = document.getElementById('set_rol_id_' + idRol);
-            boton.innerText = nombreRol;
+        Livewire.on('setRolList', ({ id, nombre }) => {
+            let boton = document.getElementById('set_rol_id_' + id);
+            boton.innerText = nombre;
         });
 
-        Livewire.on('removeRolList', idRol =>{
-            let boton = document.getElementById("set_rol_id_" + idRol);
+        Livewire.on('removeRolList', ({ id }) =>{
+            let boton = document.getElementById("set_rol_id_" + id);
             let cerrar = document.getElementById('boton_rol_modal_cerrar');
             boton.classList.add("d-none");
             cerrar.click();
         });
 
         function verRoles(id){
-            Livewire.emit('verPermisos', 'parametros', id);
+            Livewire.dispatch('verPermisos', { tabla: 'parametros', id: id });
+        }
+
+        function search(){
+            let input = $("#navbarSearch");
+            let keyword  = input.val();
+            if (keyword.length > 0){
+                input.blur();
+                //alert('Falta vincular con el componente Livewire');
+                Livewire.dispatch('buscar', { keyword:keyword });
+            }
+            return false;
         }
 
         console.log('Hi!');
