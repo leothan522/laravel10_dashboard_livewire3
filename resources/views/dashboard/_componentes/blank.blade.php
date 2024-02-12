@@ -44,7 +44,7 @@
             if (keyword.length > 0){
                 input.blur();
                 alert('Falta vincular con el componente Livewire');
-                //Livewire.dispatch('buscar', { keyword:keyword });
+                //Livewire.emit('increment', keyword);
             }
             return false;
         }

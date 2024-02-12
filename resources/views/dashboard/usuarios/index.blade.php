@@ -20,6 +20,7 @@
 
 @section('content')
     @livewire('dashboard.usuarios-component')
+    @livewire('dashboard.roles-component')
 @endsection
 
 {{--@section('right-sidebar')
@@ -38,39 +39,52 @@
     <script src="{{ asset("js/app.js") }}"></script>
     <script>
 
-        $("#from_rol").submit(function(e) {
+        $("#from_role_usuario").submit(function(e) {
             e.preventDefault();
-            let nombre = document.getElementById("nuevo_rol");
-            Livewire.dispatch('saveRol', { nombre: nombre.value });
+            let nombre = $('#input_role_nombre').val();
+            Livewire.dispatch('save', { nombre: nombre });
         });
 
-        Livewire.on('addRolList', ({ id, nombre }) => {
-            let input = document.getElementById("nuevo_rol");
-            input.value = null;
-            input.blur();
-            let boton = '<button type="button" ' +
-                'class="btn btn-primary btn-sm btn-block m-1" ' +
-                'data-toggle="modal" data-target="#modal-user-permisos" ' +
-                'class="btn btn-info btn-sm" ' +
-                'onclick="verRoles(' +  id + ')" id="set_rol_id_' + id + '">' +  nombre + ' </button>';
-            $('#listar_roles').append(boton);
+        Livewire.on('addRoleList', ({ id, nombre, rows }) => {
+            $('#input_role_nombre')
+                .val('')
+                .blur();
+            let boton = '';
+            boton += '<button type="button" class="btn btn-primary btn-sm btn-block m-1" data-toggle="modal"';
+            boton += 'data-target="#modal-roles-usuarios" onclick="showRol(\'' + id + '\')" id="button_role_id_' + id + '" >';
+            boton += nombre;
+            boton += '</button>';
+
+            $('#div_listar_roles').append(boton);
+            $('#span_roles_rows').text(rows);
         });
+
+        function showRol(id){
+            $('#div_ver_spinner_roles').removeClass('d-none');
+            Livewire.dispatch('edit', { id: id } );
+        }
 
         Livewire.on('setRolList', ({ id, nombre }) => {
-            let boton = document.getElementById('set_rol_id_' + id);
-            boton.innerText = nombre;
+            $('#button_role_id_' + id).text(nombre);
         });
 
         Livewire.on('removeRolList', ({ id }) =>{
-            let boton = document.getElementById("set_rol_id_" + id);
-            let cerrar = document.getElementById('boton_rol_modal_cerrar');
-            boton.classList.add("d-none");
-            cerrar.click();
+            Livewire.dispatch('limpiar');
+            $('#button_role_id_' + id).addClass('d-none');
+            $('#button_rol_modal_cerrar').click();
         });
 
-        function verRoles(id){
-            Livewire.dispatch('verPermisos', { tabla: 'parametros', id: id });
-        }
+        Livewire.on('cerrarModal', () => {
+            $('#button_edit_modal_cerrar').click();
+        });
+
+        $('#button_rol_modal_cerrar').click(function (e) {
+            $('#div_ver_spinner_roles').removeClass('d-none');
+        });
+
+        $('#button_permisos_modal_cerrar').click(function (e) {
+            $('#div_ver_spinner_usuarios').removeClass('d-none');
+        });
 
         function search(){
             let input = $("#navbarSearch");
