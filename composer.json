@@ -10,7 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "hisorange/browser-detect": "^5.0.3",
         "intervention/image": "^3.4",
-        "jantinnerezo/livewire-alert": "^v3.0.1",
+        "jantinnerezo/livewire-alert": "^v3.0.2",
         "jeroennoten/laravel-adminlte": "^3.8",
         "kreait/laravel-firebase": "^5.2",
         "laravel/framework": "^11.0",
