@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'Morros Devops',
-    'title_prefix' => '',
+    'title_prefix' => ''.mb_strtoupper(env('APP_NAME', 'Laravel')).' | ',
     'title_postfix' => '',
 
     /*
@@ -70,7 +70,7 @@ return [
     /*'logo_img_xl' => 'img/logo_xl_210x33.png',*/
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Morros Devops',
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +113,7 @@ return [
         'img' => [
             /*'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',*/
             'path' => 'img/preloader_171x171.png',
-            'alt' => 'Logo',
+            'alt' => '...',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -213,10 +213,10 @@ return [
     |
     */
 
-    'sidebar_mini' => 'xs',
+    'sidebar_mini' => 'lg',
     'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => true,
+    'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
@@ -238,8 +238,8 @@ return [
     'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-th-large',
     'right_sidebar_theme' => 'dark',
-    'right_sidebar_slide' => true,
-    'right_sidebar_push' => false,
+    'right_sidebar_slide' => false,
+    'right_sidebar_push' => true,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
     'right_sidebar_scrollbar_auto_hide' => 'l',
 

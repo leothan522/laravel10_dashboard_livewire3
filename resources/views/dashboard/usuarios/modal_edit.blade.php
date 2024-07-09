@@ -43,7 +43,7 @@
                                             </a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b>Created_at</b>
+                                            <b>Creado</b>
                                             <a class="float-right">
                                                 {{ verFecha($created_at) }}
                                             </a>
