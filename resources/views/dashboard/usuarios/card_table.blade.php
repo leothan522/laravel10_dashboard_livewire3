@@ -27,7 +27,7 @@
             <tr class="text-navy">
                 <th class="text-center"><i class="fas fa-cloud"></i></th>
                 <th>Nombre</th>
-                <th>Email</th>
+                <th class="d-none d-lg-table-cell">Email</th>
                 <th class="text-center">Rol</th>
                 <th class="text-center">Estatus</th>
                 <th class="text-right d-none">Creado</th>
@@ -39,12 +39,18 @@
                 @foreach($listarUsers as $user)
                     @if($user->role == 100 && auth()->user()->role != 100) @continue @endif
                     <tr>
-                        <td class="text-center">{!! iconoPlataforma($user->plataforma) !!}</td>
+                        <td class="text-center">
+                            @if($user->plataforma)
+                                <i class="fas fa-mobile"></i>
+                            @else
+                                <i class="fas fa-desktop"></i>
+                            @endif
+                        </td>
                         <td>{{ ucwords($user->name) }}</td>
-                        <td>{{ strtolower($user->email) }}</td>
+                        <td class="d-none d-lg-table-cell">{{ strtolower($user->email) }}</td>
                         <td class="text-center">{{ verRole($user->role, $user->roles_id) }}</td>
                         <td class="text-center">
-                            {!! verEstatusUsuario($user->estatus, true) !!}
+                            {!! $this->getEstatusUsuario($user->estatus, true) !!}
                             {{--<span class="text-sm"> ID: {{ $user->id }}</span>--}}
                         </td>
                         <td class="text-right d-none">{{ haceCuanto($user->created_at)  }}</td>

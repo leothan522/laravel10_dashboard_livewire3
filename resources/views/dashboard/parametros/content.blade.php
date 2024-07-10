@@ -4,7 +4,8 @@
         @include('dashboard.parametros.card_form')
         <label for="">Parametros Manuales</label>
         <ul>
-            <li>numRowsPaginate</li>
+            <li>numRowsPaginate[null|numero]</li>
+            <li>size_codigo[tamaño|null]</li>
             {{--<li>iva</li>
             <li>telefono_soporte</li>
             <li>codigo_pedido</li>--}}

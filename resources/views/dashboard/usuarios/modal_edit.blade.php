@@ -39,7 +39,7 @@
                                         <li class="list-group-item">
                                             <b>Estatus</b>
                                             <a class="float-right text-danger">
-                                                {!! verEstatusUsuario($estatus) !!}
+                                                {!! $this->getEstatusUsuario($estatus) !!}
                                             </a>
                                         </li>
                                         <li class="list-group-item">

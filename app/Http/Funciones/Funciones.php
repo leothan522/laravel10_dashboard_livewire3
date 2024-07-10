@@ -153,15 +153,6 @@ function verUtf8($string){
     return mb_convert_encoding($string, 'UTF-8');
 }
 
-function iconoPlataforma($plataforma)
-{
-    if ($plataforma == 0) {
-        return '<i class="fas fa-desktop"></i>';
-    } else {
-        return '<i class="fas fa-mobile"></i>';
-    }
-}
-
 function verRole($role, $roles_id)
 {
     $roles = [
@@ -180,23 +171,6 @@ function verRole($role, $roles_id)
             return "NO definido";
         }
     }
-}
-
-function verEstatusUsuario($i, $icon = null)
-{
-    if (is_null($icon)){
-        $suspendido = "Suspendido";
-        $activado = "Activo";
-    }else{
-        $suspendido = '<i class="fa fa-user-slash"></i>';
-        $activado = '<i class="fa fa-user-check"></i>';
-    }
-    $status = [
-        '0' => '<span class="text-danger">'.$suspendido.'</span>',
-        '1' => '<span class="text-success">'.$activado.'</span>'/*,
-        '2' => '<span class="text-success">Confirmado</span>'*/
-    ];
-    return $status[$i];
 }
 
 function haceCuanto($fecha){
@@ -274,7 +248,7 @@ function crearMiniaturas($imagen_data, $path_data)
             'height' => 320,
             'path' => str_replace('size_', 'mini_', $path_data)
         ],
-        'detail' => [
+        /*'detail' => [
             'width' => 540,
             'height' => 560,
             'path' => str_replace('size_', 'detail_', $path_data)
@@ -288,7 +262,7 @@ function crearMiniaturas($imagen_data, $path_data)
             'width' => 570,
             'height' => 270,
             'path' => str_replace('size_', 'banner_', $path_data)
-        ]
+        ]*/
     ];
 
     $respuesta = array();
@@ -385,37 +359,36 @@ function array_sort_by($arrIni, $col, $order = SORT_ASC)
     return $arrIni;
 }
 
-function nextCodigo($parametros_nombre = null, $parametros_tabla_id = null, $formato = null){
+function nextCodigo($parametros_nombre, $parametros_tabla_id, $nombre_formato = null){
+
     $next = 1;
+    $codigo = null;
 
     //buscamos algun formato para el codigo
-    if (!is_null($parametros_tabla_id)){
-        $parametro = Parametro::where("nombre", $parametros_nombre)
-            ->where('tabla_id', $parametros_tabla_id)
-            ->first();
-    }else{
-        $parametro = Parametro::where("nombre", $parametros_nombre)
-            ->first();
-    }
-
-    if ($parametro) {
-        if (is_null($parametros_tabla_id)){
+    if (!is_null($nombre_formato)){
+        $parametro = Parametro::where("nombre", $nombre_formato)->where('tabla_id', $parametros_tabla_id)->first();
+        if ($parametro) {
             $codigo = $parametro->valor;
-            $next = $parametro->tabla_id;
         }else{
-            $explode = explode(',', $parametro->valor);
-            $codigo = $explode[0];
-            $next = $explode[1];
-        }
-    }else{
-        if (is_null($formato)){
             $codigo = "N".$parametros_tabla_id.'-';
-        }else{
-            $codigo = $formato;
         }
     }
 
-    if (!is_numeric($next)) { $next = 1; }
+    //buscamos el proximo numero
+    $parametro = Parametro::where("nombre", $parametros_nombre)->where('tabla_id', $parametros_tabla_id)->first();
+    if ($parametro){
+        $next = $parametro->valor;
+        $parametro->valor = $next + 1;
+        $parametro->save();
+    }else{
+        $parametro = new Parametro();
+        $parametro->nombre = $parametros_nombre;
+        $parametro->tabla_id = $parametros_tabla_id;
+        $parametro->valor = 2;
+        $parametro->save();
+    }
+
+    if (!is_numeric($next)){ $next = 1; }
 
     $size = cerosIzquierda($next, numSizeCodigo());
 

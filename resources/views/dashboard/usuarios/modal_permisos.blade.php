@@ -17,7 +17,7 @@
                             <li class="breadcrumb-item active" >{{ $edit_name }}</li>
                             <li class="breadcrumb-item active" >{{ $edit_email }}</li>
                             <li class="breadcrumb-item active" >{{ $rol_nombre }}</li>
-                            <li class="breadcrumb-item active" >{!! verEstatusUsuario($estatus, true) !!}</li>
+                            <li class="breadcrumb-item active" >{!! $this->getEstatusUsuario($estatus, true) !!}</li>
                         </ol>
                     </div>
                 </div>
