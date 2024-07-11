@@ -6,7 +6,7 @@
                 <button class="btn btn-tool text-danger" wire:click="limpiar"><i class="fas fa-times-circle"></i>
                 </button>
             @else
-                Usuarios Registrados [ <b class="text-navy">{{ $rows }}</b> ]
+                Usuarios Registrados [ <b class="text-navy">{{ $rowsUsuarios }}</b> ]
             @endif
         </h3>
 
@@ -16,13 +16,17 @@
                     <i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>
                 </a>
             @endif
+                <button type="button" class="btn btn-tool" wire:click="setLimit" @if($rows > $rowsUsuarios) disabled @endif >
+                    <i class="fas fa-sort-amount-down-alt"></i> Ver más
+                </button>
             <ul class="pagination pagination-sm float-right m-1">
-                {{ $listarUsers->links() }}
+                {{--{{ $listarUsers->links() }}--}}
             </ul>
         </div>
     </div>
-    <div class="card-body table-responsive p-0" {{--style="height: 400px;"--}}>
-        <table class="table {{--table-head-fixed--}} table-hover text-nowrap">
+
+    <div class="card-body table-responsive p-0" @if($tableStyle) style="height: 72vh;" @endif >
+        <table class="table table-sm table-head-fixed table-hover text-nowrap">
             <thead>
             <tr class="text-navy">
                 <th class="text-center"><i class="fas fa-cloud"></i></th>
@@ -86,6 +90,10 @@
             @endif
             </tbody>
         </table>
+    </div>
+
+    <div class="card-footer">
+        <small>Mostrando {{ $listarUsers->count() }}</small>
     </div>
 
     {!! verSpinner() !!}

@@ -17,24 +17,48 @@ class UsuariosComponent extends Component
     use LivewireAlert;
     use WithPagination;
 
+    public $rows = 0, $numero = 14, $tableStyle = false;
     public $view = "create", $keyword;
     public $name, $email, $password, $role, $usuarios_id;
     public $edit_name, $edit_email, $edit_password, $edit_role = 0, $edit_roles_id = 0, $created_at, $estatus = 1, $photo, $empresas_id;
     public $rol_nombre, $tabla = 'usuarios', $getPermisos, $cambios = false;
 
+    public function mount()
+    {
+        $this->setLimit();
+    }
+
     public function render()
     {
         $roles = Parametro::where('tabla_id', '-1')->get();
+
         $users = User::buscar($this->keyword)
             ->orderBy('role', 'DESC')
             ->orderBy('roles_id', 'DESC')
             ->orderBy('created_at', 'DESC')
-            ->paginate(numRowsPaginate());
+            ->limit($this->rows)
+            ->get();
+
         $rows = User::count();
+
+        if ($rows > $this->numero) {
+            $this->tableStyle = true;
+        }
+
         return view('livewire.dashboard.usuarios-component')
             ->with('listarRoles', $roles)
             ->with('listarUsers', $users)
-            ->with('rows', $rows);
+            ->with('rowsUsuarios', $rows);
+    }
+
+    public function setLimit()
+    {
+        if (numRowsPaginate() < $this->numero) {
+            $rows = $this->numero;
+        } else {
+            $rows = numRowsPaginate();
+        }
+        $this->rows = $this->rows + $rows;
     }
 
     #[On('limpiar')]
