@@ -12,7 +12,7 @@
                 <div class="row justify-content-center">
                     <div class="row col-md-11">
 
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                             <div class="card card-navy card-outline">
                                 <div class="card-body box-profile">
                                     <div class="text-center">
@@ -61,20 +61,20 @@
                                             <div class="col-md-6">
                                                 @if ($estatus)
                                                     @php($clase = "btn-danger")
-                                                    @php($texto = "Suspender Usuario")
+                                                    @php($texto = "Suspender <br> Usuario")
                                                 @else
                                                     @php($clase = "btn-success")
-                                                    @php($texto = "Reactivar Usuario")
+                                                    @php($texto = "Reactivar <br> Usuario")
                                                 @endif
                                                 <button type="button" wire:click="cambiarEstatus({{ $usuarios_id }})" class="btn {{ $clase }} btn-block"
                                                         @if(!comprobarPermisos('usuarios.estatus')) disabled @endif>
-                                                    <b>{{ $texto }}</b>
+                                                    <b>{!! $texto !!}</b>
                                                 </button>
                                             </div>
                                             <div class="col-md-6">
                                                 <button type="button" wire:click="restablecerClave({{ $usuarios_id }})" class="btn btn-block btn-secondary"
                                                         @if(!comprobarPermisos('usuarios.password')) disabled @endif>
-                                                    <b>Restablecer Contraseña</b>
+                                                    <b>Restablecer <br> Contraseña</b>
                                                 </button>
                                             </div>
                                         </div>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
 
                             <div class="card card-navy" style="height: inherit; width: inherit; transition: all 0.15s ease 0s;">
 

@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
 
-    <div class="col-md-3">
+    <div class="col-md-4 col-lg-3">
         @include('dashboard.parametros.card_form')
         <label for="">Parametros Manuales</label>
         <ul>
@@ -12,7 +12,7 @@
         </ul>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-8 col-lg-9">
         @include('dashboard.parametros.card_table')
     </div>
 
