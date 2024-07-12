@@ -2,11 +2,11 @@
     <div class="card-header">
         <h3 class="card-title">
             @if($keyword)
-                Resultados de la Busqueda { <b class="text-danger">{{ $keyword }}</b> }
+                Busqueda { <b class="text-danger">{{ $keyword }}</b> }
                 <button class="btn btn-tool text-danger" wire:click="limpiar"><i class="fas fa-times-circle"></i>
                 </button>
             @else
-                Usuarios Registrados [ <b class="text-navy">{{ $rowsUsuarios }}</b> ]
+                Usuarios [ <b class="text-navy">{{ $rowsUsuarios }}</b> ]
             @endif
         </h3>
 
@@ -16,12 +16,9 @@
                     <i class="fas fa-file-excel"></i> <i class="fas fa-download"></i>
                 </a>
             @endif
-                <button type="button" class="btn btn-tool" wire:click="setLimit" @if($rows > $rowsUsuarios) disabled @endif >
-                    <i class="fas fa-sort-amount-down-alt"></i> Ver más
-                </button>
-            <ul class="pagination pagination-sm float-right m-1">
-                {{--{{ $listarUsers->links() }}--}}
-            </ul>
+            <button type="button" class="btn btn-tool" wire:click="setLimit" @if($rows > $rowsUsuarios) disabled @endif >
+                <i class="fas fa-sort-amount-down-alt"></i> Ver más
+            </button>
         </div>
     </div>
 

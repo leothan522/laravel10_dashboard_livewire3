@@ -10,12 +10,10 @@ use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class UsuariosComponent extends Component
 {
     use LivewireAlert;
-    use WithPagination;
 
     public $rows = 0, $numero = 14, $tableStyle = false;
     public $view = "create", $keyword;
