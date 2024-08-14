@@ -794,6 +794,7 @@
             }
         }
     </style>
+    @livewireStyles
 </head>
 <body class="antialiased">
 <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white">
@@ -1403,6 +1404,8 @@ MDI0LTAyLTExVDE2OjMwOjAwKzAxOjAwYK4uogAAAABJRU5ErkJggg==" />
         </div>
     </div>
 </div>
+@livewireScripts
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-livewire-alert::scripts />
 </body>
-@include('sweetalert::alert')
 </html>
